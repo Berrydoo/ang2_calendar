@@ -1,4 +1,24 @@
 <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+          <select class="form-control" (change)="setMonth(m.value)" #m>
+              <option value="">Select a month...</option>
+              <option *ngFor="let month of months" value="{{ month.id }}">
+                  {{ month.name }}
+              </option>
+          </select>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-7">
+          <select class="form-control" (change)="setYear(y.value)"  #y>
+              <option value="">Select a year...</option>
+              <option *ngFor="let yr of years" value="{{ yr }}">
+                  {{ yr }}
+              </option>
+          </select>
+      </div>
+  </div>
   <div class="row">
     <div class="col-md-7">
       <h2>{{ monthYearTitle }}</h2>  

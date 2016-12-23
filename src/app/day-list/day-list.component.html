@@ -10,8 +10,12 @@
         'col-md-offset-6':day.getShowOffset(6)
       }"
       >
-      <a href="javascript:void(0);" class="thumbnail" [class.today]="day.dayIsToday()">
-        {{ day.calendarDay.date() }}
-      </a>
+       <div class="media-body" [class.today]="day.dayIsToday()">
+          <h4 class="media-heading">
+              {{ day.calendarDay.date() }}
+          </h4> 
+          <!--stuff can go here-->
+      </div>
+
   </div>
 </div>

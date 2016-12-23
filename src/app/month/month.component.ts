@@ -1,9 +1,10 @@
 import * as moment from 'moment';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import {Month} from '../month';
 import {Week}  from '../week';
 import {Day}   from '../day';
+import {DropdownMonth} from '../dropdown-month';
 
 @Component({
   selector: 'month',
@@ -18,16 +19,30 @@ export class MonthComponent implements OnInit {
   monthYearTitle:string;
   month:Month; 
 
-  @Input() monthNumber:number;
-  @Input() yearNumber:number;
+  // dropdown values
+  months:DropdownMonth[] = [];
+  years:number[] = [];
 
-  constructor( ) { }
+  // @Input() monthNumber:number;
+  // @Input() yearNumber:number;
+
+  monthNumber:number;
+  yearNumber:number;
+
+  constructor( ) {
+    this.createDropdownValues();
+   }
 
   ngOnInit() {
+    this.createCalendar();
+  }
 
+  createCalendar(){  
+    this.days = [];
+    
     this.startDate = moment()
-                  .year(this.yearNumber )
-                  .month( this.monthNumber-1)
+                  .year(this.yearNumber || moment().year() )
+                  .month( this.monthNumber-1 || moment().month() )
                   .date(1);
 
     this.numDaysInMonth = this.startDate.daysInMonth();
@@ -86,5 +101,36 @@ export class MonthComponent implements OnInit {
       }
     }
     this.month = globalMonth;
+  }
+
+  setMonth( value:number ){
+    this.monthNumber = value;
+    this.createCalendar();
+  }
+
+  setYear( value:number ){
+    this.yearNumber = value;
+    this.createCalendar();
+  }
+
+  private createDropdownValues(){
+
+    for( let i = 1; i < 20; i++){
+      this.years.push(1999+i);
+    }  
+
+    this.months.push( new DropdownMonth(1, 'January'));
+    this.months.push( new DropdownMonth(2, 'February'));
+    this.months.push( new DropdownMonth(3, 'March'));
+    this.months.push( new DropdownMonth(4, 'April'));
+    this.months.push( new DropdownMonth(5, 'May'));
+    this.months.push( new DropdownMonth(6, 'June'));
+    this.months.push( new DropdownMonth(7, 'July'));
+    this.months.push( new DropdownMonth(8, 'August'));
+    this.months.push( new DropdownMonth(9, 'September'));
+    this.months.push( new DropdownMonth(10, 'October'));
+    this.months.push( new DropdownMonth(11, 'November'));
+    this.months.push( new DropdownMonth(12, 'December'));
+    
   }
 }
