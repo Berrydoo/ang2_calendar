@@ -23,11 +23,8 @@ export class MonthComponent implements OnInit {
   months:DropdownMonth[] = [];
   years:number[] = [];
 
-  // @Input() monthNumber:number;
-  // @Input() yearNumber:number;
-
-  monthNumber:number;
-  yearNumber:number;
+  monthNumber:number = moment().month();
+  yearNumber:number = moment().year();
 
   constructor( ) {
     this.createDropdownValues();
@@ -39,10 +36,10 @@ export class MonthComponent implements OnInit {
 
   createCalendar(){  
     this.days = [];
-    
+
     this.startDate = moment()
-                  .year(this.yearNumber || moment().year() )
-                  .month( this.monthNumber-1 || moment().month() )
+                  .year(this.yearNumber )
+                  .month( this.monthNumber )
                   .date(1);
 
     this.numDaysInMonth = this.startDate.daysInMonth();
@@ -104,33 +101,35 @@ export class MonthComponent implements OnInit {
   }
 
   setMonth( value:number ){
+    console.log('Month:', value);
     this.monthNumber = value;
     this.createCalendar();
   }
 
   setYear( value:number ){
+    console.log('Year', value);
     this.yearNumber = value;
     this.createCalendar();
   }
 
   private createDropdownValues(){
 
-    for( let i = 1; i < 20; i++){
+    for( let i = 1; i < 22; i++){
       this.years.push(1999+i);
     }  
 
-    this.months.push( new DropdownMonth(1, 'January'));
-    this.months.push( new DropdownMonth(2, 'February'));
-    this.months.push( new DropdownMonth(3, 'March'));
-    this.months.push( new DropdownMonth(4, 'April'));
-    this.months.push( new DropdownMonth(5, 'May'));
-    this.months.push( new DropdownMonth(6, 'June'));
-    this.months.push( new DropdownMonth(7, 'July'));
-    this.months.push( new DropdownMonth(8, 'August'));
-    this.months.push( new DropdownMonth(9, 'September'));
-    this.months.push( new DropdownMonth(10, 'October'));
-    this.months.push( new DropdownMonth(11, 'November'));
-    this.months.push( new DropdownMonth(12, 'December'));
+    this.months.push( new DropdownMonth(0, 'January'));
+    this.months.push( new DropdownMonth(1, 'February'));
+    this.months.push( new DropdownMonth(2, 'March'));
+    this.months.push( new DropdownMonth(3, 'April'));
+    this.months.push( new DropdownMonth(4, 'May'));
+    this.months.push( new DropdownMonth(5, 'June'));
+    this.months.push( new DropdownMonth(6, 'July'));
+    this.months.push( new DropdownMonth(7, 'August'));
+    this.months.push( new DropdownMonth(8, 'September'));
+    this.months.push( new DropdownMonth(9, 'October'));
+    this.months.push( new DropdownMonth(10, 'November'));
+    this.months.push( new DropdownMonth(11, 'December'));
     
   }
 }
