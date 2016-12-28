@@ -7,7 +7,8 @@ export class Week {
 
     getAddBlankCells(){
         return ( this.days.length > 0 &&    
-                    this.days[0].calendarDay.date() == 1);
+                    this.days[0].calendarDay.date() == 1 && 
+                    this.getBlankCellCount() > 0 );
     }
 
     getBlankCellCount(){

@@ -14,4 +14,17 @@ td {
 .calendar-event {
     background-color: #0275d8;
     color: white;
+    border-radius: 4px;
+}
+
+.blankCellFormat {
+    background-color: lightgray;
+}
+
+.cellFormat {
+    background-color: #f5f4f1;
+}
+
+.lightBorder {
+    border: thin solid darkblue;
 }

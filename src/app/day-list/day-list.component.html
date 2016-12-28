@@ -1,27 +1,3 @@
-<!--<div class="row" *ngFor="let week of month.weeks" >
-  <div class="col-md-1" 
-      *ngFor="let day of week.days" 
-      [ngClass]="{ 
-        'offset-md-1':day.getShowOffset(1),
-        'offset-md-2':day.getShowOffset(2),
-        'offset-md-3':day.getShowOffset(3),
-        'offset-md-4':day.getShowOffset(4),
-        'offset-md-5':day.getShowOffset(5),
-        'offset-md-6':day.getShowOffset(6)
-      }"
-      >
-      <div class="card" [class.today]="day.dayIsToday()">
-        <div class="card-block">
-          <h4 class="card-title">{{ day.calendarDay | date:'d' }}</h4>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let evt of day.events">{{evt.title}}</li>
-          </ul>
-        </div>
-      </div>
-  </div>
-</div>-->
-
-
 <table class="table">
   <thead>
     <tr>
@@ -36,8 +12,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let week of month.weeks">
-      <td *ngIf="week.getAddBlankCells()" [attr.colspan]="week.getBlankCellCount()" >&nbsp;</td>
-      <td *ngFor="let day of week.days" [class.today]="day.dayIsToday()">
+      <td *ngIf="week.getAddBlankCells()" [attr.colspan]="week.getBlankCellCount()" class="blankCellFormat lightBorder" >&nbsp;</td>
+      <td *ngFor="let day of week.days" [class.today]="day.dayIsToday()" class="cellFormat lightBorder">
           <p class="text-md-right font-weight-bold">{{ day.calendarDay | date:'d' }}</p>
           <ul class="list-group list-group-flush">
             <li class="list-group-item calendar-event" *ngFor="let evt of day.events">{{evt.title}}</li>

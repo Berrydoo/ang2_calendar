@@ -12,15 +12,6 @@ export class Day implements OnInit{
     offsetClassName: string = "";
     events:CalendarEvent[] = [];
 
-    getShowOffset( offsetValue:number ){
-        if ( this.calendarDay.date() == 1 &&
-                 this.columnOffset == offsetValue ){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     dayIsToday(){
         return this.calendarDay.isSame( moment(), 'day' );
     }
