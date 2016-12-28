@@ -1,21 +1,48 @@
-<div class="row" *ngFor="let week of month.weeks" >
+<!--<div class="row" *ngFor="let week of month.weeks" >
   <div class="col-md-1" 
       *ngFor="let day of week.days" 
       [ngClass]="{ 
-        'col-md-offset-1':day.getShowOffset(1),
-        'col-md-offset-2':day.getShowOffset(2),
-        'col-md-offset-3':day.getShowOffset(3),
-        'col-md-offset-4':day.getShowOffset(4),
-        'col-md-offset-5':day.getShowOffset(5),
-        'col-md-offset-6':day.getShowOffset(6)
+        'offset-md-1':day.getShowOffset(1),
+        'offset-md-2':day.getShowOffset(2),
+        'offset-md-3':day.getShowOffset(3),
+        'offset-md-4':day.getShowOffset(4),
+        'offset-md-5':day.getShowOffset(5),
+        'offset-md-6':day.getShowOffset(6)
       }"
       >
-       <div class="media-body" [class.today]="day.dayIsToday()">
-          <h4 class="media-heading">
-              {{ day.calendarDay.date() }}
-          </h4> 
-          <!--stuff can go here-->
+      <div class="card" [class.today]="day.dayIsToday()">
+        <div class="card-block">
+          <h4 class="card-title">{{ day.calendarDay | date:'d' }}</h4>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let evt of day.events">{{evt.title}}</li>
+          </ul>
+        </div>
       </div>
-
   </div>
-</div>
+</div>-->
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Sunday</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of month.weeks">
+      <td *ngIf="week.getAddBlankCells()" [attr.colspan]="week.getBlankCellCount()" >&nbsp;</td>
+      <td *ngFor="let day of week.days" [class.today]="day.dayIsToday()">
+          <p class="text-md-right font-weight-bold">{{ day.calendarDay | date:'d' }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item calendar-event" *ngFor="let evt of day.events">{{evt.title}}</li>
+          </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,10 +1,12 @@
 import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators} from '@angular/forms'
 
 import {Month} from '../month';
 import {Week}  from '../week';
 import {Day}   from '../day';
 import {DropdownMonth} from '../dropdown-month';
+import {CalendarEvent} from '../calendar-event';
 
 @Component({
   selector: 'month',
@@ -12,6 +14,8 @@ import {DropdownMonth} from '../dropdown-month';
   styleUrls: ['./month.component.css']
 })
 export class MonthComponent implements OnInit {
+
+  myForm:FormGroup;
 
   days:moment.Moment[] = [];
   startDate:moment.Moment;
@@ -32,6 +36,29 @@ export class MonthComponent implements OnInit {
 
   ngOnInit() {
     this.createCalendar();
+
+    this.myForm = new FormGroup({
+      eventName : new FormControl('', [
+        Validators.required, 
+        Validators.minLength(5)
+      ]),
+      eventDate : new FormControl('', Validators.required)
+    })
+  }
+
+  createEvent(){
+
+    for ( let week of this.month.weeks ){
+      for ( let day of week.days ){
+        if ( day.calendarDay.isSame( this.myForm.value.eventDate, 'day')){
+          let newEvent:CalendarEvent = new CalendarEvent();
+          newEvent.eventDay = day;
+          newEvent.title = this.myForm.value.eventName;
+          day.events.push( newEvent );
+        }
+      }
+    }
+    this.myForm.reset();
   }
 
   createCalendar(){  
@@ -61,10 +88,7 @@ export class MonthComponent implements OnInit {
         let week = new Week();
         week.title = "Week " + (globalMonth.weeks.length + 1);
 
-        let calDay = new Day();
-        calDay.title = day.format("d");
-        calDay.calendarDay = day;
-        calDay.columnOffset = day.weekday();
+        let calDay = this.creatCalendarDay( day );
 
         week.days.push( calDay );
         globalMonth.weeks.push( week );
@@ -80,34 +104,34 @@ export class MonthComponent implements OnInit {
         globalMonth.weeks.push( week );
         globalWeek = week;
 
-        let calDay = new Day()
-        calDay.calendarDay = day;
-        calDay.title = day.format("d");
-        calDay.columnOffset = day.weekday();
+        let calDay = this.creatCalendarDay( day );
 
         globalWeek.days.push( calDay );
 
       }
       else {
-        let calDay = new Day()
-        calDay.calendarDay = day;
-        calDay.title = "abc";
-        calDay.columnOffset = day.weekday();
-
+        let calDay = this.creatCalendarDay( day );
         globalWeek.days.push( calDay );
       }
     }
     this.month = globalMonth;
   }
 
+  creatCalendarDay( day:moment.Moment ){
+      let calDay = new Day()
+      calDay.calendarDay = day;
+      calDay.columnOffset = day.weekday();
+
+      return calDay;
+
+  }
+
   setMonth( value:number ){
-    console.log('Month:', value);
     this.monthNumber = value;
     this.createCalendar();
   }
 
   setYear( value:number ){
-    console.log('Year', value);
     this.yearNumber = value;
     this.createCalendar();
   }

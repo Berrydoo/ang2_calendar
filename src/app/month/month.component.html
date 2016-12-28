@@ -1,37 +1,43 @@
 <div class="container">
     <div class="row">
       <div class="col-md-7">
-          <select class="form-control" (change)="setMonth(m.value)" #m>
-              <option value="">Select a month...</option>
-              <option *ngFor="let month of months" value="{{ month.id }}">
-                  {{ month.name }}
-              </option>
-          </select>
+          <div class="form-group">
+            <select class="form-control" (change)="setMonth(m.value)" #m>
+                <option value="">Select a month...</option>
+                <option *ngFor="let month of months" value="{{ month.id }}">
+                    {{ month.name }}
+                </option>
+            </select>
+            <select class="form-control" (change)="setYear(y.value)"  #y>
+                <option value="">Select a year...</option>
+                <option *ngFor="let yr of years" value="{{ yr }}">
+                    {{ yr }}
+                </option>
+            </select>
+          </div>
+      </div>
+      <div class="col-md-5">
+        <form novalidate class="col-md-7" [formGroup]="myForm" (ngSubmit)="createEvent()" >
+            <div class="form-group">
+                <input type="text" 
+                        placeholder="Enter event name"
+                        class="form-control"
+                        formControlName="eventName" 
+                        value="" >
+                <select class="form-control"
+                        formControlName="eventDate" >
+                    <option >Select the day of the event...</option>
+                    <option *ngFor="let day of days" value="{{day}}">{{ day | date:['shortDate'] }}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Event</button>
+        </form>
       </div>
   </div>
   <div class="row">
-      <div class="col-md-7">
-          <select class="form-control" (change)="setYear(y.value)"  #y>
-              <option value="">Select a year...</option>
-              <option *ngFor="let yr of years" value="{{ yr }}">
-                  {{ yr }}
-              </option>
-          </select>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-12">
       <h2>{{ monthYearTitle }}</h2>  
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-1">Sunday</div>
-    <div class="col-md-1">Monday</div>
-    <div class="col-md-1">Tuesday</div>
-    <div class="col-md-1">Wednesday</div>
-    <div class="col-md-1">Thursday</div>
-    <div class="col-md-1">Friday</div>
-    <div class="col-md-1">Saturday</div>
   </div>
   <day-list [month]="month"></day-list>
 </div>

@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import { OnInit } from '@angular/core';
+import { CalendarEvent } from './calendar-event'
 
 export class Day implements OnInit{
 
@@ -9,6 +10,7 @@ export class Day implements OnInit{
     calendarDay:moment.Moment;
     columnOffset: number = 0;
     offsetClassName: string = "";
+    events:CalendarEvent[] = [];
 
     getShowOffset( offsetValue:number ){
         if ( this.calendarDay.date() == 1 &&
